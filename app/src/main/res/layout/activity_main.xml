@@ -6,23 +6,34 @@
     android:layout_height="match_parent"
     android:background="#FFFFFF"
     android:fillViewport="true"
-    tools:context=".activities.MainActivity">
-
+    tools:context=".activities.activities.MainActivity">
 
     <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content">
 
+        <!--        <ImageButton-->
+        <!--            android:id="@+id/imageButton"-->
+        <!--            android:layout_width="wrap_content"-->
+        <!--            android:layout_height="wrap_content"-->
+        <!--            android:layout_marginStart="16dp"-->
+        <!--            android:layout_marginTop="16dp"-->
+        <!--            android:background="?attr/selectableItemBackgroundBorderless"-->
+        <!--            android:visibility="visible"-->
+        <!--            app:layout_constraintStart_toStartOf="parent"-->
+        <!--            app:layout_constraintTop_toTopOf="parent"-->
+        <!--            app:srcCompat="@drawable/info_drawable" />-->
+
 
         <TextView
-            android:id="@+id/textView"
+            android:id="@+id/currentSpeed"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginTop="88dp"
             android:fontFamily="monospace"
             android:maxLength="4"
             android:maxLines="1"
-            android:text="9999"
+            android:text="0"
             android:textColor="#000000"
             android:textSize="100dp"
             android:textStyle="bold"
@@ -33,7 +44,7 @@
             tools:ignore="SpUsage" />
 
         <TextView
-            android:id="@+id/textView2"
+            android:id="@+id/speedUnit"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:fontFamily="monospace"
@@ -43,7 +54,7 @@
             android:textStyle="bold"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/textView" />
+            app:layout_constraintTop_toBottomOf="@+id/currentSpeed" />
 
         <androidx.cardview.widget.CardView
             android:id="@+id/tripCardView"
@@ -73,6 +84,7 @@
             android:layout_marginTop="8dp"
             android:layout_marginEnd="8dp"
             android:elevation="4dp"
+            android:visibility="visible"
             app:cardBackgroundColor="#536DFE"
             app:cardCornerRadius="6dp"
             app:layout_constraintEnd_toEndOf="parent"
@@ -93,6 +105,7 @@
             android:layout_marginTop="8dp"
             android:layout_marginEnd="8dp"
             android:elevation="4dp"
+            android:visibility="visible"
             app:cardBackgroundColor="#7B4CFE"
             app:cardCornerRadius="6dp"
             app:layout_constraintEnd_toEndOf="parent"
@@ -112,6 +125,7 @@
             android:layout_marginTop="8dp"
             android:layout_marginEnd="8dp"
             android:elevation="4dp"
+            android:visibility="visible"
             app:cardBackgroundColor="#FF5252"
             app:cardCornerRadius="6dp"
             app:layout_constraintBottom_toTopOf="@+id/guideline6"
@@ -138,7 +152,33 @@
             android:orientation="horizontal"
             app:layout_constraintGuide_begin="827dp" />
 
-    </androidx.constraintlayout.widget.ConstraintLayout>
+        <!--        <TextView-->
+        <!--            android:id="@+id/compassTextView"-->
+        <!--            android:layout_width="wrap_content"-->
+        <!--            android:layout_height="wrap_content"-->
+        <!--            android:layout_marginStart="24dp"-->
+        <!--            android:layout_marginTop="192dp"-->
+        <!--            android:text="N"-->
+        <!--            android:textAlignment="center"-->
+        <!--            android:textColor="#000000"-->
+        <!--            android:textSize="18dp"-->
+        <!--            android:textStyle="bold"-->
+        <!--            app:layout_constraintStart_toStartOf="parent"-->
+        <!--            app:layout_constraintTop_toTopOf="parent" />-->
 
+
+        <!--        <ImageView-->
+        <!--            android:id="@+id/imageView2"-->
+        <!--            android:layout_width="28dp"-->
+        <!--            android:layout_height="28dp"-->
+        <!--            android:layout_marginStart="16dp"-->
+        <!--            android:layout_marginTop="2dp"-->
+        <!--            android:scaleY="-1"-->
+        <!--            app:layout_constraintStart_toStartOf="parent"-->
+        <!--            app:layout_constraintTop_toBottomOf="@+id/compassTextView"-->
+        <!--            android:src="@drawable/direction_arrow" />-->
+
+
+    </androidx.constraintlayout.widget.ConstraintLayout>
 
 </ScrollView>

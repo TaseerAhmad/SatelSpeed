@@ -3,4 +3,8 @@
     <color name="colorPrimary">#008577</color>
     <color name="colorPrimaryDark">#FFFFFF</color>
     <color name="colorAccent">#D81B60</color>
+    <color name="gpsErrorDialog">#E53935</color>
+    <color name="pureWhite">#FFFFFF</color>
+    <color name="materialBlue">#3D5AFE</color>
+    <color name="premiumGold">#FFD700</color>
 </resources>

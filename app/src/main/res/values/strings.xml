@@ -1,3 +1,8 @@
 <resources>
-    <string name="app_name">SatSpeed</string>
+    <string name="app_name">SatelSpeed</string>
+    <string name="no_data">N/A</string>
+    <string name="coordinates">Coordinates</string>
+    <string name="latitude">Latitude :</string>
+    <string name="longitude">Longitude :</string>
+    <string name="gps_error">GPS Not Available</string>
 </resources>

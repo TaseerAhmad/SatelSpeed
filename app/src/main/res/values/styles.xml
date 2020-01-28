@@ -3,9 +3,15 @@
     <!-- Default app theme -->
     <style name="WhiteWash" parent="Theme.AppCompat.NoActionBar">
         <item name="android:windowLightStatusBar" tools:targetApi="m">true</item>
-        <item name="colorPrimary">@color/colorPrimary</item>
+        <item name="colorPrimary">#3D5AFE</item>
         <item name="colorPrimaryDark">@color/colorPrimaryDark</item>
         <item name="colorAccent">@color/colorAccent</item>
+    </style>
+
+    <style name="AlertDialogTheme" parent="Theme.AppCompat.Light.Dialog.Alert">
+        <item name="android:background">#3D5AFE</item>
+        <item name="android:textAppearanceButton">@color/pureWhite</item>
+        <item name="android:fontFamily">@font/roboto</item>
     </style>
 
 </resources>
