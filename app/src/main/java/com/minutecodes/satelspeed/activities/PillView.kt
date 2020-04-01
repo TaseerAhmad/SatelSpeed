@@ -23,6 +23,7 @@ class PillView(context: Context, attr: AttributeSet) : View(context, attr) {
 
     override fun onDraw(canvas: Canvas) {
         drawPillView(canvas)
+
     }
 
     private fun drawPillView(canvas: Canvas) {
