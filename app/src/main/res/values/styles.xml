@@ -1,17 +1,24 @@
-<resources xmlns:tools="http://schemas.android.com/tools">
+<resources>
 
     <!-- Default app theme -->
     <style name="WhiteWash" parent="Theme.AppCompat.NoActionBar">
-        <item name="android:windowLightStatusBar" tools:targetApi="m">true</item>
-        <item name="colorPrimary">#3D5AFE</item>
-        <item name="colorPrimaryDark">@color/colorPrimaryDark</item>
-        <item name="colorAccent">@color/colorAccent</item>
+        <item name="android:windowBackground">@color/materialBlack</item>
+        <item name="colorPrimary">@color/materialPink</item>
+        <item name="colorPrimaryDark">@color/materialPink</item>
+        <item name="android:textColor">@color/pureWhite</item>
+        <item name="android:fontFamily">@font/roboto</item>
+        <item name="colorAccent">@color/materialPink</item>
     </style>
 
     <style name="AlertDialogTheme" parent="Theme.AppCompat.Light.Dialog.Alert">
         <item name="android:background">#3D5AFE</item>
         <item name="android:textAppearanceButton">@color/pureWhite</item>
         <item name="android:fontFamily">@font/roboto</item>
+    </style>
+
+    <style name="BottomNavigationTheme" parent="Theme.AppCompat.Light">
+        <item name="colorPrimary">@color/materialPink</item>
+        <item name="android:textColorSecondary">@color/materialGrey</item>
     </style>
 
 </resources>

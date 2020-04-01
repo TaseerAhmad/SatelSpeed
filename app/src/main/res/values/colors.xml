@@ -7,4 +7,8 @@
     <color name="pureWhite">#FFFFFF</color>
     <color name="materialBlue">#3D5AFE</color>
     <color name="premiumGold">#FFD700</color>
+    <color name="materialBlack">#131313</color>
+    <color name="materialPink">#EC2369</color>
+    <color name="materialGrey">#4D4C4C</color>
+    <color name="materialRed">#F44336</color>
 </resources>

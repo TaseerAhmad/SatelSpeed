@@ -5,4 +5,5 @@
     <string name="latitude">Latitude :</string>
     <string name="longitude">Longitude :</string>
     <string name="gps_error">GPS Not Available</string>
+    <string name="mapbox_access_token">pk.eyJ1IjoidGFzZWVyYWhtYWQiLCJhIjoiY2s2M2lpZG5zMDdoMTNtcGJnNm9sNjRldCJ9.ftPvznoE9EMeRMC7HgjBFg</string>
 </resources>

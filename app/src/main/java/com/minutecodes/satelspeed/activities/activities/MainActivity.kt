@@ -1,141 +1,166 @@
 package com.minutecodes.satelspeed.activities.activities
 
 import android.Manifest
-import android.annotation.SuppressLint
-import android.content.DialogInterface
 import android.content.IntentSender
 import android.content.pm.PackageManager
-import android.content.res.Resources
 import android.os.Bundle
+import android.util.Log
 import android.view.HapticFeedbackConstants
 import android.view.MenuItem
 import android.view.View
-import android.view.WindowManager
-import androidx.appcompat.app.AlertDialog
 import androidx.appcompat.app.AppCompatActivity
-import androidx.appcompat.widget.TooltipCompat
 import androidx.core.app.ActivityCompat
 import androidx.core.content.ContextCompat
-import androidx.databinding.DataBindingUtil
-import androidx.drawerlayout.widget.DrawerLayout
+import androidx.fragment.app.Fragment
 import androidx.lifecycle.Observer
-import androidx.lifecycle.ViewModelProviders
+import androidx.lifecycle.ViewModel
+import androidx.lifecycle.ViewModelProvider
 import com.google.android.gms.common.api.ResolvableApiException
 import com.google.android.gms.location.LocationServices
 import com.google.android.gms.location.LocationSettingsRequest
-import com.google.android.material.internal.NavigationMenuItemView
-import com.google.android.material.navigation.NavigationView
-import com.google.android.material.snackbar.Snackbar
 import com.minutecodes.satelspeed.R
-import com.minutecodes.satelspeed.activities.BAD_GPS
-import com.minutecodes.satelspeed.activities.GPS_UNAVAILABLE
 import com.minutecodes.satelspeed.activities.PERMISSION_REQUEST_CODE
-import com.minutecodes.satelspeed.activities.fragments.GeoDataUnitEditor
+import com.minutecodes.satelspeed.activities.SPEEDOMETER_FRAG_NAME
+import com.minutecodes.satelspeed.activities.fragments.HistoryFragment
+import com.minutecodes.satelspeed.activities.fragments.MapViewFragment
+import com.minutecodes.satelspeed.activities.fragments.SpeedometerFragment
+import com.minutecodes.satelspeed.activities.interfaces.BottomNavigationListener
+import com.minutecodes.satelspeed.activities.viewmodel.DataViewModel
 import com.minutecodes.satelspeed.activities.viewmodel.LocationViewModel
-import com.minutecodes.satelspeed.databinding.TestBinding
-import com.tapadoo.alerter.Alerter
-import kotlinx.android.synthetic.main.trip_details.view.*
+import com.minutecodes.satelspeed.activities.viewmodel.SharedLocationViewModel
+import com.minutecodes.satelspeed.activities.viewmodel.factory.DataViewModelFactory
+import com.minutecodes.satelspeed.activities.viewmodel.factory.LocationViewModelFactory
+import com.minutecodes.satelspeed.databinding.ActivityMainBinding
 
-class MainActivity : AppCompatActivity() {
-    private lateinit var binding: TestBinding
-    private lateinit var exitDialog: AlertDialog.Builder
-    private lateinit var snackbar: Snackbar
-    private val alerter by lazy { Alerter.create(this) }
+class MainActivity : AppCompatActivity(), BottomNavigationListener {
+    private lateinit var dataViewModel: DataViewModel
+    private lateinit var locationViewModel: LocationViewModel
+    private lateinit var activityMainBinding: ActivityMainBinding
+    private lateinit var sharedLocationViewModel: SharedLocationViewModel
 
-    @SuppressLint("MissingPermission")
+    override fun onNavigationItemSelected(item: MenuItem): Boolean {
+        performHapticFeedback()
+        when (item.itemId) {
+            R.id.settings -> openSettings()
+            R.id.mapView -> openFragment(MapViewFragment(), "mapView")
+            R.id.speedHistory -> openFragment(HistoryFragment(), "history")
+            R.id.speedoMeter -> openFragment(SpeedometerFragment(), SPEEDOMETER_FRAG_NAME)
+        }
+        return true
+    }
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
+        activityMainBinding = ActivityMainBinding.inflate(layoutInflater)
+        setContentView(activityMainBinding.root)
 
-        binding = DataBindingUtil.setContentView(this, R.layout.test)
+        initializeViewModels()
 
-        val view = binding.tripDetailsInclude.tripResetImgButton
-        TooltipCompat.setTooltipText(view, "Reset")
+        with(activityMainBinding.bottomNavigation) {
+            setOnNavigationItemSelectedListener(this@MainActivity)
+            setOnNavigationItemReselectedListener(this@MainActivity)
+        }
 
-        val context = this
-        snackbar = Snackbar.make(binding.tripCardView, "", Snackbar.LENGTH_INDEFINITE)
-        var viewModel: LocationViewModel
-        exitDialog = makeExitDialog()
-        //alerter = createDefaultAlerter()
+        requestHighAccuracyGps()
+
+        if (!isLocationPermissionGranted()) {
+            requestLocationPermission()
+        }
 
 
-        binding.drawer.addDrawerListener(object : DrawerLayout.DrawerListener {
-            override fun onDrawerStateChanged(newState: Int) {
-
-            }
-
-            override fun onDrawerSlide(drawerView: View, slideOffset: Float) {
-
-            }
-
-            override fun onDrawerClosed(drawerView: View) {
-
-            }
-
-            override fun onDrawerOpened(drawerView: View) {
-
-            }
+        locationViewModel.locationAvailability().observe(this, Observer {
+            sharedLocationViewModel.setLocationAvailability(it)
         })
 
-        ViewModelProviders.of(context)[LocationViewModel(application)::class.java].apply {
-            binding.geoDataCardView.setOnLongClickListener {
-                it.performHapticFeedback(HapticFeedbackConstants.LONG_PRESS)
-//                supportFragmentManager.beginTransaction().add(GeoDataUnitEditor(), "geoEditor")
-//                    .commit()
-                val view = layoutInflater.inflate(R.layout.geodata_unit_editor, null, false)
-                AlertDialog.Builder(this@MainActivity, R.style.AlertDialogTheme).setView(view).apply {
-                    setPositiveButton("Set", { dialog, which ->  }) //TODO For test purpose only
-                    setNegativeButton("Close", { dialog, which -> })
-                    create()
-                    show()
-                }
-                true
-            }
-            lifecycle.addObserver(this)
-            locationAvailability().observe(
-                context,
-                Observer { handleGpsError(it, GPS_UNAVAILABLE) })
-            gpsQualityAvailability().observe(context, Observer { handleGpsError(it, BAD_GPS) })
-        }.also {
-            binding.apply {
-                viewmodel = it
-                lifecycleOwner = context
-            }
-            viewModel = it
-        }
+        locationViewModel.locationData()?.observe(this, Observer {
+            val speedUnit = dataViewModel.getSpeedUnit()
+            val distanceUnit = dataViewModel.getDistanceUnit()
+            sharedLocationViewModel.setSystemUnits(speedUnit, distanceUnit)
+            sharedLocationViewModel.setLocation(it)
+        })
 
-        if (!locationPermissionAvailable()) {
-            askLocationPermission()
-        }
-
-        val locationRequest = viewModel.getLocationRequest()
-        val settingBuilder = LocationSettingsRequest.Builder().addLocationRequest(locationRequest)
-        val client = LocationServices.getSettingsClient(this)
-        val task = client.checkLocationSettings(settingBuilder.build())
-
-        task.addOnFailureListener {
-            if (it is ResolvableApiException) {
-                requestHighAccuracyGps(it)
-            }
-        }
-        holdWakeLock()
     }
 
-    override fun onBackPressed() {
-        exitDialog.show()
+    override fun onResume() {
+        super.onResume()
+
+        applyImmersiveMode()
+
+        locationViewModel.startLocationUpdates()
     }
 
-    private fun locationPermissionAvailable(): Boolean {
+    override fun onPostResume() {
+        super.onPostResume()
+
+        if (isFragmentContainerEmpty()) {
+            openFragment(SpeedometerFragment(), SPEEDOMETER_FRAG_NAME)
+        }
+
+    }
+
+    override fun onPause() {
+        super.onPause()
+
+        locationViewModel.stopLocationUpdates()
+    }
+
+    private fun isFragmentContainerEmpty(): Boolean {
+        return supportFragmentManager.findFragmentById(activityMainBinding.fragmentContainer.id) == null
+    }
+
+    private fun performHapticFeedback() {
+        activityMainBinding.bottomNavigation.performHapticFeedback(HapticFeedbackConstants.VIRTUAL_KEY)
+    }
+
+    private fun getDataViewModel(): DataViewModel {
+        return ViewModelProvider(this, DataViewModelFactory(application))[DataViewModel::class.java]
+    }
+
+    private fun getSharedLocationViewModel(): SharedLocationViewModel {
+        return ViewModelProvider(this)[(SharedLocationViewModel::class.java)]
+    }
+
+    private fun requestLocationPermission() {
+        val permission = Manifest.permission.ACCESS_FINE_LOCATION
+        ActivityCompat.requestPermissions(this, arrayOf(permission), PERMISSION_REQUEST_CODE)
+    }
+
+    private fun openSettings() {
+
+    }
+
+    private fun openFragment(fragment: Fragment, tag: String) {
+        val transaction = supportFragmentManager.beginTransaction()
+        transaction.replace(R.id.fragment_container, fragment, tag).commit()
+    }
+
+    private fun isLocationPermissionGranted(): Boolean {
         val isGranted = PackageManager.PERMISSION_GRANTED
         val locationPermission = Manifest.permission.ACCESS_FINE_LOCATION
         return ContextCompat.checkSelfPermission(this, locationPermission) == isGranted
     }
 
-    private fun askLocationPermission() {
-        val permission = Manifest.permission.ACCESS_FINE_LOCATION
-        ActivityCompat.requestPermissions(this, arrayOf(permission), PERMISSION_REQUEST_CODE)
+    private fun applyImmersiveMode() {
+        window.decorView.systemUiVisibility = View.SYSTEM_UI_FLAG_LAYOUT_HIDE_NAVIGATION or
+                View.SYSTEM_UI_FLAG_HIDE_NAVIGATION or
+                View.SYSTEM_UI_FLAG_IMMERSIVE_STICKY or
+                View.SYSTEM_UI_FLAG_FULLSCREEN
     }
 
-    private fun requestHighAccuracyGps(exception: ResolvableApiException) {
+    private fun initializeViewModels() {
+        dataViewModel = getDataViewModel()
+        locationViewModel = getLocationViewModel()
+        sharedLocationViewModel = getSharedLocationViewModel()
+    }
+
+    private fun getLocationViewModel(): LocationViewModel {
+        return ViewModelProvider(
+            this,
+            LocationViewModelFactory(this)
+        )[LocationViewModel::class.java]
+    }
+
+    private fun createHighAccuracyRequest(exception: ResolvableApiException) {
         try {
             exception.startResolutionForResult(this@MainActivity, 0x1)
         } catch (sendEx: IntentSender.SendIntentException) {
@@ -143,42 +168,18 @@ class MainActivity : AppCompatActivity() {
         }
     }
 
-    private fun makeExitDialog(): AlertDialog.Builder {
-        return AlertDialog.Builder(this).apply {
-            setTitle("Exit app?")
-            setPositiveButton("EXIT") { dialog, _ ->
-                dialog.dismiss()
-                super.onBackPressed()
+    private fun requestHighAccuracyGps() {
+        val locationRequest = locationViewModel.getLocationRequest()
+        val settingBuilder =
+            LocationSettingsRequest.Builder().addLocationRequest(locationRequest)
+        val client = LocationServices.getSettingsClient(this)
+        val task = client.checkLocationSettings(settingBuilder.build())
+
+        task.addOnFailureListener {
+            if (it is ResolvableApiException) {
+                createHighAccuracyRequest(it)
             }
-            setNegativeButton("CANCEL") { dialog, _ -> dialog.dismiss() }
         }
-    }
-
-    private fun createDefaultAlerter(): Alerter {
-        return Alerter.create(this).apply {
-            setBackgroundColorRes(R.color.gpsErrorDialog)
-            enableProgress(true)
-            setProgressColorInt(R.color.pureWhite)
-            setDismissable(false)
-            enableInfiniteDuration(true)
-        }
-    }
-
-    private fun handleGpsError(isGpsAvailable: Boolean, message: String) {
-        if (!isGpsAvailable) {
-//            snackbar.setText(message).show() //TODO Remove snack bar, temporary display
-//            Alerter.isShowing
-//            if (!Alerter.isShowing)
-//                alerter.setText(message).show()
-        } else {
-
-//            snackbar.dismiss()
-//            Alerter.hide()
-        }
-    }
-
-    private fun holdWakeLock() {
-        window.addFlags(WindowManager.LayoutParams.FLAG_KEEP_SCREEN_ON)
     }
 
 }
