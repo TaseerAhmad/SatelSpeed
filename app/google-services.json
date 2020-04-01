@@ -1,0 +1,40 @@
+{
+  "project_info": {
+    "project_number": "1033961119909",
+    "firebase_url": "https://satelspeed-5718c.firebaseio.com",
+    "project_id": "satelspeed-5718c",
+    "storage_bucket": "satelspeed-5718c.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:1033961119909:android:3c6acf2f25d6b56c21ed4c",
+        "android_client_info": {
+          "package_name": "com.minutecodes.satelspeed"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "1033961119909-bucchofbodh34utrefn5dv5tunt9f05k.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyAAM7Jtq6OcVwViuVhf84-xWB9KwWQKYD0"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "1033961119909-bucchofbodh34utrefn5dv5tunt9f05k.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

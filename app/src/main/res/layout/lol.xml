@@ -1,0 +1,295 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent">
+
+    <!--                    <FrameLayout-->
+    <!--                        android:layout_width="match_parent"-->
+    <!--                        android:layout_height="580dp"-->
+    <!--                        android:background="@drawable/custom_round_shape" />-->
+
+
+    <ImageView
+        android:id="@+id/recordingProgress"
+        android:layout_width="18dp"
+        android:layout_height="18dp"
+        android:layout_marginTop="136dp"
+        android:src="@drawable/history_icon"
+        android:tint="@color/pureWhite"
+        android:visibility="invisible"
+        app:layout_constraintStart_toEndOf="@+id/currentSpeed"
+        app:layout_constraintTop_toTopOf="@+id/guideline10" />
+
+
+    <ImageView
+        android:id="@+id/gpsWarn"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="4dp"
+        android:layout_marginTop="40dp"
+        android:visibility="gone"
+        android:src="@drawable/warn_icon"
+        app:layout_constraintEnd_toStartOf="@+id/guideline24"
+        app:layout_constraintStart_toStartOf="@+id/guideline22"
+        app:layout_constraintTop_toBottomOf="@+id/signalStrength" />
+
+    <eo.view.signalstrength.SignalStrengthView
+        android:id="@+id/signalStrength"
+        android:layout_width="30dp"
+        android:layout_height="30dp"
+        android:layout_marginTop="60dp"
+        app:layout_constraintEnd_toStartOf="@+id/guideline24"
+        app:layout_constraintHorizontal_bias="0.49"
+        app:layout_constraintStart_toStartOf="@+id/guideline22"
+        app:layout_constraintTop_toTopOf="@+id/guideline23"
+        app:signalStrengthColor="?colorAccent"
+        app:signalStrengthLevel="0"
+        app:signalStrengthTheme="rounded" />
+
+    <TextView
+        android:id="@+id/currentSpeed"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="167dp"
+        android:layout_marginEnd="167dp"
+        android:elevation="10dp"
+        android:text="0"
+        android:textSize="134dp"
+        android:textStyle="bold"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.527"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="@+id/guideline10" />
+
+    <TextView
+        android:id="@+id/currentSpeedLabel"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:gravity="center"
+        android:text="Current Speed"
+        android:textColor="#EC2369"
+        android:textSize="18dp"
+        android:textStyle="bold"
+        app:layout_constraintEnd_toStartOf="@+id/guideline25"
+        app:layout_constraintStart_toStartOf="@+id/guideline20"
+        app:layout_constraintTop_toBottomOf="@+id/currentSpeed" />
+
+    <TextView
+        android:id="@+id/timeLabel"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:fontFamily="@font/roboto"
+
+        android:gravity="start"
+        android:text="Time"
+        android:textColor="#EC2369"
+        android:textSize="14dp"
+        app:layout_constraintEnd_toStartOf="@+id/guideline22"
+        app:layout_constraintStart_toStartOf="@+id/guideline20"
+        app:layout_constraintTop_toTopOf="@+id/guideline23" />
+
+    <!--    <TextClock-->
+    <!--        android:id="@+id/systemTime"-->
+    <!--        android:layout_width="0dp"-->
+    <!--        android:layout_height="wrap_content"-->
+    <!--        android:gravity="center|start"-->
+    <!--        android:textSize="18.5dp"-->
+    <!--        android:textStyle="bold"-->
+    <!--        app:layout_constraintEnd_toStartOf="@+id/guideline22"-->
+    <!--        app:layout_constraintStart_toStartOf="@+id/guideline20"-->
+    <!--        app:layout_constraintTop_toBottomOf="@+id/timeLabel" />-->
+
+    <!--    <TextView-->
+    <!--        android:id="@+id/systemTime"-->
+    <!--        android:layout_width="0dp"-->
+    <!--        android:layout_height="wrap_content"-->
+    <!--            android:fontFamily="@font/roboto"-->
+    <!--        android:gravity="center"-->
+    <!--        android:text="9 : 33 AM"-->
+    <!--            android:textColor="@color/pureWhite"-->
+    <!--            android:textSize="17dp"-->
+    <!--            android:textStyle="bold"-->
+    <!--        app:layout_constraintEnd_toStartOf="@+id/guideline22"-->
+    <!--        app:layout_constraintStart_toStartOf="@+id/guideline20"-->
+    <!--        app:layout_constraintTop_toBottomOf="@+id/timeLabel" />-->
+
+    <TextView
+        android:id="@+id/distanceLabel"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:gravity="end"
+        android:text="Distance"
+        android:textColor="#EC2369"
+        android:textSize="14dp"
+        app:layout_constraintEnd_toStartOf="@+id/guideline25"
+        app:layout_constraintStart_toStartOf="@+id/guideline24"
+        app:layout_constraintTop_toTopOf="@+id/guideline23" />
+
+    <TextView
+        android:id="@+id/distanceCovered"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:gravity="center|end"
+        android:text="2.5 Km"
+        android:textSize="18.5dp"
+        android:textStyle="bold"
+        app:layout_constraintEnd_toStartOf="@+id/guideline25"
+        app:layout_constraintStart_toStartOf="@+id/guideline24"
+        app:layout_constraintTop_toBottomOf="@+id/distanceLabel" />
+
+    <ImageButton
+        android:id="@+id/back_selection_button"
+        android:layout_width="wrap_content"
+        android:layout_height="0dp"
+        android:layout_marginStart="90dp"
+        android:background="?attr/selectableItemBackgroundBorderless"
+        android:padding="4dp"
+        app:layout_constraintBottom_toTopOf="@+id/guideline12"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/currentSpeedLabel"
+        app:layout_constraintVertical_bias="0.0"
+        app:srcCompat="@drawable/navigate_before_icon" />
+
+    <ImageButton
+        android:id="@+id/forward_selection_button"
+        android:layout_width="wrap_content"
+        android:layout_height="0dp"
+        android:layout_marginEnd="90dp"
+        android:background="?attr/selectableItemBackgroundBorderless"
+        android:padding="4dp"
+        app:layout_constraintBottom_toTopOf="@+id/guideline12"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/currentSpeedLabel"
+        app:srcCompat="@drawable/navigate_next_icon" />
+
+    <androidx.constraintlayout.widget.Guideline
+        android:id="@+id/guideline20"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        app:layout_constraintGuide_begin="54dp" />
+
+    <androidx.constraintlayout.widget.Guideline
+        android:id="@+id/guideline22"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        app:layout_constraintGuide_begin="137dp" />
+
+    <androidx.constraintlayout.widget.Guideline
+        android:id="@+id/guideline23"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        app:layout_constraintGuide_percent="0.55" />
+
+    <androidx.constraintlayout.widget.Guideline
+        android:id="@+id/guideline24"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        app:layout_constraintGuide_end="137dp" />
+
+    <androidx.constraintlayout.widget.Guideline
+        android:id="@+id/guideline25"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        app:layout_constraintGuide_end="54dp" />
+
+    <androidx.constraintlayout.widget.Guideline
+        android:id="@+id/guideline10"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        app:layout_constraintGuide_begin="36dp" />
+
+    <androidx.constraintlayout.widget.Guideline
+        android:id="@+id/guideline12"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        app:layout_constraintGuide_begin="278dp" />
+
+    <TextView
+        android:id="@+id/avgSpeed"
+        android:layout_width="0dp"
+        android:layout_height="0dp"
+        android:fontFamily="@font/roboto"
+        android:gravity="center|center_vertical"
+        android:text="Avg 0 Km/h"
+        android:textStyle="bold"
+        android:visibility="visible"
+        app:layout_constraintBottom_toTopOf="@+id/guideline12"
+        app:layout_constraintEnd_toStartOf="@+id/guideline24"
+        app:layout_constraintStart_toStartOf="@+id/guideline22"
+        app:layout_constraintTop_toBottomOf="@+id/currentSpeedLabel" />
+
+    <TextView
+        android:id="@+id/maxSpeed"
+        android:layout_width="0dp"
+        android:layout_height="0dp"
+        android:fontFamily="@font/roboto"
+        android:gravity="center|center_vertical"
+        android:text="Max 0 Km/h"
+        android:textStyle="bold"
+        android:visibility="invisible"
+        app:layout_constraintBottom_toTopOf="@+id/guideline12"
+        app:layout_constraintEnd_toStartOf="@+id/guideline24"
+        app:layout_constraintStart_toStartOf="@+id/guideline22"
+        app:layout_constraintTop_toBottomOf="@+id/currentSpeedLabel" />
+
+    <com.google.android.material.button.MaterialButton
+        android:id="@+id/recordController"
+        style="@style/Widget.MaterialComponents.Button.OutlinedButton"
+        android:layout_width="0dp"
+        android:layout_height="2dp"
+        android:background="@android:color/transparent"
+        android:text="Start"
+        android:textAlignment="center"
+        android:textAllCaps="true"
+        android:textAppearance="@font/roboto"
+        android:textColor="@color/pureWhite"
+        android:textSize="14sp"
+        android:textStyle="bold"
+        android:theme="@style/Theme.MaterialComponents"
+        android:visibility="gone"
+        app:layout_constraintBottom_toTopOf="@+id/guideline12"
+        app:layout_constraintEnd_toStartOf="@+id/guideline24"
+        app:layout_constraintStart_toStartOf="@+id/guideline22"
+        app:layout_constraintTop_toBottomOf="@+id/currentSpeedLabel"
+        app:rippleColor="@color/materialPink"
+        app:strokeColor="@color/materialPink" />
+
+    <TextView
+        android:id="@+id/gpsError"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="40dp"
+        android:drawableTop="@drawable/error_icon"
+        android:fontFamily="@font/roboto"
+        android:text="GPS FAILURE"
+        android:textColor="@color/materialRed"
+        android:textSize="14dp"
+        android:textStyle="bold"
+        android:visibility="gone"
+        app:layout_constraintEnd_toStartOf="@+id/guideline24"
+        app:layout_constraintHorizontal_bias="0.487"
+        app:layout_constraintStart_toStartOf="@+id/guideline22"
+        app:layout_constraintTop_toBottomOf="@+id/signalStrength" />
+
+    <!--    <FrameLayout-->
+    <!--        android:layout_width="15dp"-->
+    <!--        android:layout_height="350dp"-->
+    <!--        android:layout_marginTop="32dp"-->
+    <!--        android:background="#FF4A4A"-->
+    <!--        android:fadingEdge="vertical"-->
+    <!--        android:orientation="vertical"-->
+    <!--        app:layout_constraintStart_toStartOf="parent"-->
+    <!--        app:layout_constraintTop_toTopOf="parent">-->
+
+    <!--    </FrameLayout>-->
+
+</androidx.constraintlayout.widget.ConstraintLayout>

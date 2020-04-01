@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android">
+    <item
+        android:id="@+id/speedoMeter"
+        android:icon="@drawable/navigation_icon"
+        android:title="Speedometer" />
+
+    <item
+        android:id="@+id/mapView"
+        android:icon="@drawable/map_icon"
+        android:title="Map View" />
+
+    <item
+        android:id="@+id/speedHistory"
+        android:icon="@drawable/history_icon"
+        android:title="History" />
+
+    <item
+        android:id="@+id/settings"
+        android:icon="@drawable/settings_icon"
+        android:title="Settings" />
+
+
+</menu>

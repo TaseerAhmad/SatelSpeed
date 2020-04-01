@@ -1,0 +1,83 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools">
+
+    <data>
+
+    </data>
+
+    <FrameLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:background="#0F0F0F">
+
+        <androidx.constraintlayout.widget.ConstraintLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent">
+
+            <TextView
+                android:id="@+id/currentSpeed"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="167dp"
+                android:layout_marginTop="134dp"
+                android:layout_marginEnd="167dp"
+                android:fontFamily="@font/roboto"
+                android:text="18"
+                android:textColor="@color/pureWhite"
+                android:textSize="96dp"
+                android:textStyle="bold"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent" />
+
+            <TextView
+                android:id="@+id/currentSpeedLabel"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="166dp"
+                android:layout_marginEnd="168dp"
+                android:fontFamily="@font/roboto"
+                android:text="Current Speed"
+                android:textColor="#EC2369"
+                android:textStyle="bold"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintHorizontal_bias="0.468"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/currentSpeed" />
+
+            <TextView
+                android:id="@+id/textView12"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="153dp"
+                android:layout_marginTop="4dp"
+                android:layout_marginEnd="154dp"
+                android:text=" Avg 12 Km/h"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintHorizontal_bias="0.0"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/currentSpeedLabel" />
+
+            <com.google.android.material.bottomnavigation.BottomNavigationView
+                android:id="@+id/bottom_navigation"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:background="#202020"
+                android:rotation="90"
+                app:itemIconSize="28dp"
+                app:itemIconTint="#3F51B5"
+                app:itemTextColor="@color/pureWhite"
+                app:labelVisibilityMode="unlabeled"
+                app:menu="@menu/drawer_menu"
+                tools:layout_editor_absoluteX="428dp"
+                tools:layout_editor_absoluteY="29dp" />
+
+        </androidx.constraintlayout.widget.ConstraintLayout>
+
+
+        <!-- Main content -->
+
+    </FrameLayout>
+</layout>
